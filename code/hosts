@@ -1,3 +1,6 @@
+[all:vars]
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+
 [webservers]
 web1 ansible_host=10.0.0.1
 web2 ansible_host=10.0.0.2
@@ -7,3 +10,7 @@ db1 ansible_host=172.16.99.1
 
 #[veos]
 #switch1 ansible_host=192.168.0.14
+
+[ios]
+192.168.10.2 ansible_net_user=craigb
+192.168.10.3 ansible_net_user=craigb

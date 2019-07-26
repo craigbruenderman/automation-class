@@ -1,0 +1,43 @@
+---
+- name: Create Report with Ansible and Jinja
+  hosts: ios,veos
+  connection: local
+  gather_facts: no
+
+  vars_prompt:
+    - name: password
+      prompt: "What is your password?"
+
+  tasks:
+
+    - name: Collect facts for IOS
+      ios_facts:
+        provider:
+          username: craigb
+          password: "{{ password }}"
+          host: "{{ inventory_hostname }}"
+
+    - name: Debug config
+      debug:
+        var: ansible_net_config
+
+    - name: Debug neighbors
+      debug:
+        var: ansible_net_neighbors
+
+    - name: Generate Device Reports
+      template:
+        src: ./reports/facts.j2
+        dest: ./reports/facts/{{ inventory_hostname }}.md
+
+    - name: Create Master Report
+      assemble:
+        src: ./reports/facts/
+        dest: ./reports/master.md
+        delimiter: "---"
+      run_once: true
+
+    - name: Create PDF of Master
+      raw: pandoc ./reports/master.md -o ./reports/master.pdf
+      delegate_to: localhost
+      run_once: true

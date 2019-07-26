@@ -1,0 +1,25 @@
+---
+# Name of the playbook
+- name: Our first Ansible playbook
+  # List of hosts or host group to run against
+  hosts: localhost
+  # Toggle to run with root privileges
+  become: true
+
+  # Variables we define to use within this playbook
+  vars:
+    # Password to use when running command as root
+    ansible_become_password: "@rista123"
+    # Name of the package we'll install
+    package_name: "jq"
+
+  # List of tasks to be executed
+  tasks:
+    # Name of one task
+    - name: Install jq
+      # Action of this task
+      # In this case, the apt package manager module
+      apt:
+        # Actual name of the package to be installed
+        # Referencing the defined variable 'package_name'
+        name: "{{ package_name }}"

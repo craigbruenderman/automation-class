@@ -1,0 +1,19 @@
+---
+- name: Twilio API
+  hosts: localhost
+  vars:
+    email:
+    serialnum:
+    twilio_info: &twilio_info
+      account_sid: 
+      auth_token:
+      from_number: '+15022374850'
+      to_number: '+15025481100'
+  tasks:
+    - name: Send a text, win a prize!
+      twilio:
+        msg: My email is {{ email }} and my switch serial is {{ serialnum }}. I want the prize!
+        <<: *twilio_info
+        #media_url: https://www.bigpanda.io/wp-content/uploads/2014/04/images_old-blog_2014_05_image00.png
+      delegate_to: localhost
+      tags: mms

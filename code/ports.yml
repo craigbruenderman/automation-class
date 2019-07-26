@@ -1,0 +1,14 @@
+- interface: FastEthernet0/28
+  description: AppleTV
+  mode: access
+  vlan: 10
+
+- interface: FastEthernet0/29
+  description: IP Camera
+  mode: access
+  vlan: 11
+
+- interface: FastEthernet0/30
+  description: ESXi Host
+  mode: trunk
+  vlan: 10

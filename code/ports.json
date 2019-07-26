@@ -1,0 +1,1 @@
+[{"interface": "FastEthernet0/28", "vlan": 10, "description": "AppleTV", "mode": "access"}, {"interface": "FastEthernet0/29", "vlan": 11, "description": "IP Camera", "mode": "access"}, {"interface": "FastEthernet0/30", "description": "ESXi Host", "mode": "trunk"}, {"interface": "FastEthernet0/31", "vlan": 12, "description": "IP Phone", "mode": "access"}]

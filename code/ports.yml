@@ -11,4 +11,8 @@
 - interface: FastEthernet0/30
   description: ESXi Host
   mode: trunk
-  vlan: 10
+
+- interface: FastEthernet0/31
+  description: IP Phone
+  mode: access
+  vlan: 12

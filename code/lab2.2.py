@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import json
 import yaml
 from pprint import pprint
@@ -10,19 +12,27 @@ core1 = {'hostname': 'core1.cbts.com', 'vendor': 'arista', 'dns': dns_servers, '
 # Function to print list and dictionary
 def as_python():
     print("------ As Python Native List ------")
+    print(type(dns_servers))
     print(dns_servers)
     print("\n")
+
     print("------ As Python Native Dictionary ------")
+    print(type(core1))
     pprint(core1)
     print("\n")
 
 # Function to convert Python dict to JSON
-def as_json():
+def as_json(ourDict):
     print("------ As JSON ------")
-    print(json.dumps(core1, indent=4))
+    print(json.dumps(ourDict))
     print("\n")
 
 # Function to convert Python dict to YAML
-def as_yaml():
-    print("------ As YAML ------\n")
-    print(yaml.dump(core1))
+def as_yaml(ourDict):
+    print("------ As YAML ------")
+    print(yaml.dump(ourDict))
+
+#if __name__ == "__main__":
+#    as_python()
+#    as_json()
+#    as_yaml()

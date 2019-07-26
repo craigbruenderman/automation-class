@@ -20,10 +20,12 @@
     - name: Debug config
       debug:
         var: ansible_net_config
+        verbosity: 2
 
     - name: Debug neighbors
       debug:
         var: ansible_net_neighbors
+        verbosity: 2
 
     - name: Generate Device Reports
       template:

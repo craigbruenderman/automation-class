@@ -248,6 +248,9 @@ Let's up the ante by running an ad-hoc command against a remote device, but firs
 * Your inventory file 'hosts' should now look like this
 
 ```
+[all:vars]
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+
 [webservers]
 web1 ansible_host=10.0.0.1
 web2 ansible_host=10.0.0.2
@@ -255,8 +258,15 @@ web2 ansible_host=10.0.0.2
 [database_servers]
 db1 ansible_host=172.16.99.1
 
-[veos]
-switch1 ansible_host=192.168.0.14
+#[veos]
+#192.168.0.10
+#192.168.0.11
+#192.168.0.14
+
+[ios]
+192.168.10.2
+192.168.10.3
+
 ```
 * Issue the following command
 

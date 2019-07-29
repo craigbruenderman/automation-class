@@ -3,7 +3,7 @@ header-includes:
 - \usepackage{inconsolata}
 - \usepackage{fancyhdr}
 - \usepackage{graphicx}
-- \usepackage[margin=0.5in,headheight=70pt,headsep=0.3in,includehead]{geometry}
+- \usepackage[margin=0.75in,headheight=70pt,headsep=0.4in,includehead]{geometry}
 - \pagestyle{fancy}
 - \fancyfoot[C]{Network Automation Foundations}
 - \fancyfoot[R]{\thepage}
@@ -126,6 +126,8 @@ While that may look similar, the abstracted way is easier to implement in Python
 
 Click here for pyeapi documentation.
 
+https://pyeapi.readthedocs.io/en/latest/quickstart.html
+
 ## Use provided script to add a local user to a virtual Arista device
 
 ```python
@@ -230,7 +232,7 @@ With this ad-hoc command, we're invoking Ansible against localhost, and using th
 ```bash
   $ ansible localhost -m apt -a "name=yamllint" --become -k -c local
 ```
-* Provide your jumpbox password when prompted
+* Provide your SSH jumpbox (not Guacamole) password when prompted
 
 With this ad hoc command, we're invoking Ansible against localhost, using the apt package management module to install the yamllint\footnote{yamllint is an excellent utility to check for proper YAML syntax} package on your jumpbox, as super user with a prompted password. The connection method is local.
 
@@ -240,7 +242,7 @@ Both ad hoc commands we've run so far were harder than simply invoking the actio
 
 Let's up the ante by running an ad-hoc command against a remote device, but first we’ll need an inventory file. Inventory files define groups of devices along with their IPs and, optionally, variables. You'll typically reference these groups to scope the execution of Ansible playbook tasks.
 
-* Open the ~/automation-class/ansible/hosts inventory file in Atom
+* Open the ~/automation-class/code/hosts inventory file in Atom
 * Notice this inventory consists of groups of devices, their common names, and the IPs they should be connected to via
 * Uncomment the ```[veos]``` group and its member device and save it
 * Your inventory file 'hosts' should now look like this

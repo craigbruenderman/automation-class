@@ -8,7 +8,7 @@
   # This allows us to keep passwords out of files
   vars_prompt:
     - name: password
-      prompt: "What is your password?"
+      prompt: "Switch password?"
 
   tasks:
 
@@ -17,9 +17,8 @@
       eos_facts:
         provider:
           username: arista
-          password: arista
+          password: "{{ password }}"
           host: "{{ inventory_hostname }}"
-          transport: network_cli
           validate_certs: no
       tags: eos
 
@@ -43,6 +42,12 @@
       debug:
         var: ansible_net_neighbors
         verbosity: 2
+
+    - name: Create reports directory if it does not exist
+      file:
+        path: reports/facts
+        state: directory
+        mode: '0755'
 
     # Use the Jinja template to render a Markdown file for each device
     - name: Generate Device Reports

@@ -19,6 +19,7 @@
           username: arista
           password: arista
           host: "{{ inventory_hostname }}"
+          transport: eapi
       tags: eos
 
     # Gather facts from IOS devices

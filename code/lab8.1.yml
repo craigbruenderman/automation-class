@@ -4,12 +4,15 @@
   connection: local
   gather_facts: no
 
+  # Here's a method to prompt for variables at runtime
+  # This allows us to keep passwords out of files
   vars_prompt:
     - name: password
       prompt: "What is your password?"
 
   tasks:
 
+    # Gather facts from IOS devices
     - name: Collect facts for IOS
       ios_facts:
         provider:
@@ -17,28 +20,35 @@
           password: "{{ password }}"
           host: "{{ inventory_hostname }}"
 
+    # Print device config when -vv+ is specified
     - name: Debug config
       debug:
         var: ansible_net_config
         verbosity: 2
 
+    # Print device neighbors when -vv+ is specified
     - name: Debug neighbors
       debug:
         var: ansible_net_neighbors
         verbosity: 2
 
+    # Use the Jinja template to render a Markdown file for each device
     - name: Generate Device Reports
       template:
         src: ./reports/facts.j2
         dest: ./reports/facts/{{ inventory_hostname }}.md
 
+    # Roll up the individual device Markdown reports into one report
     - name: Create Master Report
       assemble:
         src: ./reports/facts/
         dest: ./reports/master.md
         delimiter: "---"
+      # This tells Ansible to only run this once per playbook, not for every device
       run_once: true
 
+    # This calls the pandoc utility to turn Markdown into a PDF
+    # Pandoc is a great piece of software and what was used to generate the lab guide from Markdown and LaTeX
     - name: Create PDF of Master
       raw: pandoc ./reports/master.md -o ./reports/master.pdf
       delegate_to: localhost

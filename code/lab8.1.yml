@@ -19,6 +19,7 @@
           username: arista
           password: arista
           host: "{{ inventory_hostname }}"
+      tags: eos
 
     # Gather facts from IOS devices
     - name: Collect facts for IOS
@@ -27,6 +28,7 @@
           username: craigb
           password: "{{ password }}"
           host: "{{ inventory_hostname }}"
+      tags: ios
 
     # Print device config when -vv+ is specified
     - name: Debug config

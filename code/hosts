@@ -8,8 +8,8 @@ web2 ansible_host=10.0.0.2
 [database_servers]
 db1 ansible_host=172.16.99.1
 
-#[veos]
-#switch1 ansible_host=192.168.0.14
+[veos]
+switch1 ansible_host=192.168.0.14
 
 [ios]
 192.168.10.2 ansible_net_user=craigb

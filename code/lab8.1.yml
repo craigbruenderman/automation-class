@@ -12,6 +12,14 @@
 
   tasks:
 
+    # Gather facts from EOS devices
+    - name: Collect facts for EOS
+      eos_facts:
+        provider:
+          username: arista
+          password: arista
+          host: "{{ inventory_hostname }}"
+
     # Gather facts from IOS devices
     - name: Collect facts for IOS
       ios_facts:

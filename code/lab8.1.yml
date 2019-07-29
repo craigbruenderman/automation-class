@@ -22,14 +22,14 @@
           validate_certs: no
       tags: eos
 
-    # Gather facts from IOS devices
-    - name: Collect facts for IOS
-      ios_facts:
-        provider:
-          username: craigb
-          password: "{{ password }}"
-          host: "{{ inventory_hostname }}"
-      tags: ios
+    # # Gather facts from IOS devices
+    # - name: Collect facts for IOS
+    #   ios_facts:
+    #     provider:
+    #       username: craigb
+    #       password: "{{ password }}"
+    #       host: "{{ inventory_hostname }}"
+    #   tags: ios
 
     # Print device config when -vv+ is specified
     - name: Debug config

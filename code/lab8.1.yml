@@ -20,6 +20,7 @@
           password: arista
           host: "{{ inventory_hostname }}"
           transport: network_cli
+          validate_certs: no
       tags: eos
 
     # Gather facts from IOS devices

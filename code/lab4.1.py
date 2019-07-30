@@ -15,10 +15,3 @@ print("\n")
 
 vlans = node.api('vlans')
 d = (vlans.getall())
-print("VLANs on the device\n")
-print(type(d))
-pprint(d)
-print("\n")
-
-print("d is a dictionary of VLANs\n")
-print(d['12']['name'])

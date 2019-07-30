@@ -13,7 +13,10 @@ output: pdf_document
 \pagebreak
 
 # Python Intro Lab
-In this lab, we'll see which Python version are installed where
+
+## Check Python installation and determine versions
+
+In this lab, we'll see which Python version are installed at which locations on the jumpbox.
 
 * Open a terminal on your jumpbox and issue the following commands
 ```bash
@@ -23,9 +26,32 @@ In this lab, we'll see which Python version are installed where
   $ python3 --version
 ```
 
+## See what pip packages are installed
+
+```bash
+  $ pip list
+```
+
+## Run Python interactively
+
+Here, we'll run Python interactively, create a dictionary, and use some of its methods
+
+```bash
+  $ python
+```
+```python
+  >>> d = {'name': 'craig', 'employer': 'cbts', 'spirit animal': 'sloth'}
+  >>> d.keys()
+  >>> d.values()
+  >>> d.items()
+  >>> exit()
+```
+
 # Data Structures Lab
 
-## First, we'll clone a Github repo with code samples
+## Clone lab code from a Github repo
+
+First, we'll clone a Github repo with some pre-written code. We'll discuss Git and Github more later.
 
 * On your jumpbox, hit **http://bit.ly/cbautomation** to head to the Github repo
 * Select the green Clone or Download button
@@ -35,10 +61,15 @@ In this lab, we'll see which Python version are installed where
   $ git clone https://github.com/craigbruenderman/automation-class.git
 ```
 
-## Now we'll run Python interactively and play with lists and dictionaries within Python
+\framebox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\itshape%
+  \textbf{Note:}You won't be able to cut and paste from your machine to your jumpbox, so do that within the jumpbox itself.
+}}
+
+## Interactive Python with lists, dictionaries, and data serialization
+
+Now we'll run Python interactively and play more with lists and dictionaries within Python.
 
 * Open up lab2.2.py in Atom to observe the code
-
 * Issue the following commands in a terminal
 ```bash
   $ cd ~/automation-class/code/
@@ -69,9 +100,9 @@ In this lab, we'll see which Python version are installed where
 ```
 * This calls the function as_yaml() and passes it our core1 dictionary, which prints out the dictionary in JSON format.
 
-## Now we'll run a Python script to open a YAML file and export it as JSON
+## Run a Python script to open a YAML file and export it as JSON
 
-It is common and helpful to define data in YAML that will be consumed programmatically by things like Python and Ansible. You've been provided with a short YAML file, which holds a list of key/value (dictionary) pairs of common attributes of L2 switch ports. Let's use Python to import that YAML file, prove that is does contain a list of dictionaries, convert it to JSON, and write that out to a new file.
+It is common to define data in YAML to be consumed programmatically by tools like Python and Ansible. You've been provided with a short YAML file, which holds a list of key/value (dictionary) pairs of common attributes of L2 switch ports. Let's use Python to import that YAML file, prove that is does contain a list of dictionaries, convert it to JSON, and write that out to a new file.
 
 * Open ports.yml in Atom to examine it
 * List the files in the code directory and notice ports.yml exists, but ports.json doesn't
@@ -87,8 +118,6 @@ It is common and helpful to define data in YAML that will be consumed programmat
 \pagebreak
 
 # eAPI Command Explorer
-
-TODO
 
 This lab will demonstrate the on-switch Command API explorer feature. The Command API provides an interface to experiment with commands and view their request and response structure without having to write a script or program to test it with.
 
@@ -116,33 +145,26 @@ This lab will demonstrate the on-switch Command API explorer feature. The Comman
 
 # pyeapi
 
-TODO
-
-In this lab we will still use Python, but this time with Arista’s pyeapi module. Think of a module as a library as a way of adding on or enhancing the native capabilities of Python. You might also hear these referred to as libraries.
+In this lab we will use Python, but this time with Arista’s pyeapi module. Think of a module as a library as a way of adding on or enhancing the native capabilities of Python. You might also hear these referred to as libraries.
 
 Pyeapi is a wrapper around eAPI that abstracts common EOS commands into a more programmatic style. This allows someone without a heavy network background to easily interact with an Arista device. In other words, instead of issuing ```enable; configure; vlan 100; name foo```, we can use ```vlans.set_name(100,'foo')```.
 
 While that may look similar, the abstracted way is easier to implement in Python because it shortcuts some of the steps, and someone that only knows they need to create a VLAN can grok it without having to know the EOS command line.
 
-Click here for pyeapi documentation.
+Click **[here](https://pyeapi.readthedocs.io/en/latest/quickstart.html)** for pyeapi documentation.
 
-https://pyeapi.readthedocs.io/en/latest/quickstart.html
+## Scripted interaction with Arista eAPI
 
-## Use provided script to add a local user to a virtual Arista device
+Use the provided script to add a local user to a virtual Arista device.
 
-```python
-#!/usr/bin/python
-import pyeapi
-node = pyeapi.connect(host='192.168.0.14', username='arista', password='arista', return_node=True)
-users = node.api('users')
-users.create('testuser', secret='foo')
-users.set_privilege('testuser', value='15')
-users.set_role('testuser', value='network-admin')
+* Run lab4.1.py **with Python 2**\footnote{We use Python 2 here because the pyeapi pip module is not installed for Python 3 on the jumpbox image}
+```bash
+  $ python lab4.1.py
 ```
 
 **What does this script do?**
 
-```import pyeapi``` - this imports the pyeapi module.
+```import pyeapi``` - this imports the pyeapi module
 
 ```node = pyeapi.connect(host=‘192.168.0.14’, username=’arista’, password=’arista’, return_node=True)``` - instantiates the variable node, and uses pyeapi to create a connection to the switch using the username of arista and the password arista
 
@@ -155,6 +177,21 @@ users.set_role('testuser', value='network-admin')
 ```users.set_privilege(‘testuser’, value=‘15’)``` - Using the Users API, we use the set_privilege method; testuser is the username which was created in the last step, and the privilege level is 15
 
 ```users.set_role(‘testuser’, value=’network-admin’)``` - Using the Users API, we use the set_role method; testuser is the username which was created in the last step, and the Arista role is the predefined default role of network-admin
+
+## Interactive Python with the eAPI
+
+Here we determine that d is a dictionary returned via pyeapi. We look at the whole dictionary, then its keys only, then the values of specified keys.
+
+```bash
+  $ python -i lab4.1.py
+```
+```python
+  >>> type(d)
+  >>> d
+  >>> d.keys()
+  >>> d['12']['name']
+  >>> d['12']['state']
+```
 
 \pagebreak
 
@@ -173,6 +210,8 @@ users.set_role('testuser', value='network-admin')
 
 ## Create your own repository
 
+Git init will establish a Git repo within your current working directory.
+
 * Issue the following commands
 
 ```bash
@@ -187,8 +226,6 @@ users.set_role('testuser', value='network-admin')
   $ git status
   $ git reflog
 ```
-
-
 
 ## Branch and merge (Optional)
 
@@ -234,17 +271,21 @@ With this ad-hoc command, we're invoking Ansible against localhost, and using th
 ```
 * Provide your SSH jumpbox (not Guacamole) password when prompted
 
+\framebox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\itshape%
+  \textbf{Note:}Warnings here are normal, disregard them.
+}}
+
 With this ad hoc command, we're invoking Ansible against localhost, using the apt package management module to install the yamllint\footnote{yamllint is an excellent utility to check for proper YAML syntax} package on your jumpbox, as super user with a prompted password. The connection method is local.
 
-## Run an Ansible ad hoc command against a device in inventory
+## Run an Ansible ad hoc command against an inventory
 
 Both ad hoc commands we've run so far were harder than simply invoking the actions they performed directly on your jumpbox.
 
 Let's up the ante by running an ad-hoc command against a remote device, but first we’ll need an inventory file. Inventory files define groups of devices along with their IPs and, optionally, variables. You'll typically reference these groups to scope the execution of Ansible playbook tasks.
 
 * Open the ~/automation-class/code/hosts inventory file in Atom
-* Notice this inventory consists of groups of devices, their common names, and the IPs they should be connected to via
-* Uncomment the ```[veos]``` group and its member device and save it
+* Notice this inventory consists of groups of devices and the IPs they should be contacted on
+* Uncomment the ```[veos]``` group and its member devices and save it
 * Your inventory file 'hosts' should now look like this
 
 ```
@@ -258,10 +299,10 @@ web2 ansible_host=10.0.0.2
 [database_servers]
 db1 ansible_host=172.16.99.1
 
-#[veos]
-#192.168.0.10
-#192.168.0.11
-#192.168.0.14
+[veos]
+192.168.0.10
+192.168.0.11
+192.168.0.14
 
 [ios]
 192.168.10.2
@@ -273,6 +314,8 @@ db1 ansible_host=172.16.99.1
 ```bash
   $ ansible veos -i hosts -m raw -a "show version" -u arista -k
 ```
+
+* Enter 'arista' as the password when prompted
 
 That time, we again ran an ad hoc command, but with two differences. First, we referred to a group of (1) devices specified in an inventory file. Second, the commands were not executed locally, but rather on the remote device after authenticating to it. This is how Ansible typically operates.
 
@@ -287,9 +330,9 @@ While ad hoc commands can be useful, the real power of Ansible comes from using 
 * Open ports.json in Atom - Not very easy to look at
 
 ```
-  $ cd ~/automation-class/code/ansible
+  $ cd ~/automation-class/code
   $ ansible-playbook --version
-  $ ansible-playbook lab8.1.yml
+  $ ansible-playbook -i hosts lab7.1.yml
 ```
 
 * Now we can use the jq utility to pretty print JSON
@@ -302,21 +345,31 @@ While ad hoc commands can be useful, the real power of Ansible comes from using 
 
 ## Ansible REST API Interaction
 
-Here, we'll be using the Ansible Twilio API\footnote{This is my personal Twilio account, be gentle.} module to send messages for fun and profit. There's money on the line in this lab - things just got real. Edit lab8.2.yml and use Ansible to send me an MMS with exactly the following. The first correctly formed MMS I get wins the prize.
+Here, we'll be using the Ansible Twilio API\footnote{This is my personal Twilio account, be gentle.} module to send messages for fun and profit. There's money on the line in this lab - things just got real. The first correctly formed MMS I get wins the prize.
 
-* Your email
-* Your VEOS switch serial number
-* Heart-shaped Ansible image
+* Edit lab7.2.yml and use Ansible to send me an MMS with exactly the following.
+  - Your email
+  - Your VEOS switch serial number
+  - Heart-shaped Ansible image
 
 \pagebreak
 
 # Jinja
 
-TODO
+## Create Switch Report with Ansible and Jinja
 
+* View lab8.1.yml to see the Ansible playbook which uses Jinja
+* View reports/facts.j2 to see the Jinja template
+* Run the playbook
 
+```bash
+  >>> ansible-playbook -i hosts lab8.1.yml
+```
+* View the .md files in the reports/facts and reports/ directories
+* Open reports/master.pdf to view the combined and PDF'd report
 
 \pagebreak
+
 # Markdown Tables
 
 First Name  |  Last Name  |  Location           |  Allegiance

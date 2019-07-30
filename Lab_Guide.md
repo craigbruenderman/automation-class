@@ -135,7 +135,7 @@ This lab will demonstrate the on-switch Command API explorer feature. The Comman
   enable
   configure
   vlan 1000
-  name test
+  name vMotion
 ```
 * Log into your switch and observe that VLAN 1000 is present
 
@@ -178,6 +178,12 @@ Use the provided script to add a local user to a virtual Arista device.
 
 ```users.set_role(‘testuser’, value=’network-admin’)``` - Using the Users API, we use the set_role method; testuser is the username which was created in the last step, and the Arista role is the predefined default role of network-admin
 
+- - -
+
+There are plenty of other possibilities here. Think about your day to day operations and things that you have to do frequently that take a lot of time, but are tedious and error prone. Any Python script that can be run against one switch can be run against many more. Adding a VLAN to every switch in your datacenter might just involve providing a list of switch hostnames or IP addresses, a VLAN ID, and a name and your script will do it all for you!
+
+Another script idea is tracing a MAC across your network until you find the physical port it’s connected to. The possibilities are only limited by your imagination. This is about as close to zombo.com as you can get in the networking world!
+
 ## Interactive Python with the eAPI
 
 Here we determine that d is a dictionary returned via pyeapi. We look at the whole dictionary, then its keys only, then the values of specified keys.
@@ -189,9 +195,11 @@ Here we determine that d is a dictionary returned via pyeapi. We look at the who
   >>> type(d)
   >>> d
   >>> d.keys()
-  >>> d['12']['name']
-  >>> d['12']['state']
+  >>> d['1000']['name']
+  >>> d['1000']['state']
 ```
+
+* Notice that we're referencing the tag 1000 vMotion VLAN that we created in 3.2
 
 \pagebreak
 

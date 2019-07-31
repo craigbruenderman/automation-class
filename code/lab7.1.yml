@@ -18,7 +18,8 @@
       # Action of this task - in this case, the apt package manager module
       apt:
         # This is an Ansible looping technique
-        # {{ item }} is an iterator variable which will take the value of each item in the list from with_items
+        # {{ item }} is an iterator variable which will take
+        # the value of each item in the list from with_items
         name: "{{ item }}"
         state: present
       # List of the packages to be installed

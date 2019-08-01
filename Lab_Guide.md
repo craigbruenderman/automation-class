@@ -345,7 +345,7 @@ While ad hoc commands can be useful, the real power of Ansible comes from using 
 
 * Now we can use the jq utility to pretty print JSON
 
-```
+```bash
   $ jq . ../ports.json
 ```
 

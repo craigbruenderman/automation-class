@@ -26,3 +26,8 @@
       with_items:
         - pandoc
         - jq
+        - sl
+
+    - name: Choo choo!
+      command: sl
+      tags: sl

@@ -19,7 +19,7 @@
       apt:
         # This is an Ansible looping technique
         # {{ item }} is an iterator variable which will take
-        # the value of each item in the list from with_items
+        # the value of each item in the list with_items
         name: "{{ item }}"
         state: present
       # List of the packages to be installed
@@ -27,4 +27,5 @@
         - pandoc
         - jq
         - sl
-        - cmatrix
+        # For the love of all that is holy, DO NOT uncomment the next line
+        # - cowsay

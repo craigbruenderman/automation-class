@@ -14,6 +14,22 @@ output: pdf_document
 
 # Python Intro Lab
 
+## Clone lab code from a Github repo
+
+First, we'll clone a Github repo with some pre-written code. We'll discuss Git and Github more later.
+
+* On your jumpbox, hit **http://bit.ly/cbautomation** to head to the Github repo
+* Select the green Clone or Download button
+* Click the clipboard icon to copy the repo location text
+* Open a terminal on your jumpbox
+```
+  $ git clone https://github.com/craigbruenderman/automation-class.git
+```
+
+\framebox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\itshape%
+  \textbf{Note:}You won't be able to cut and paste from your machine to your jumpbox, so do that within the jumpbox itself.
+}}
+
 ## Check Python installation and determine versions
 
 In this lab, we'll see which Python version are installed at which locations on the jumpbox.
@@ -49,31 +65,15 @@ Here, we'll run Python interactively, create a dictionary, and use some of its m
 
 # Data Structures Lab
 
-## Clone lab code from a Github repo
-
-First, we'll clone a Github repo with some pre-written code. We'll discuss Git and Github more later.
-
-* On your jumpbox, hit **http://bit.ly/cbautomation** to head to the Github repo
-* Select the green Clone or Download button
-* Click the clipboard icon to copy the repo location text
-* Open a terminal on your jumpbox
-```
-  $ git clone https://github.com/craigbruenderman/automation-class.git
-```
-
-\framebox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\itshape%
-  \textbf{Note:}You won't be able to cut and paste from your machine to your jumpbox, so do that within the jumpbox itself.
-}}
-
 ## Interactive Python with lists, dictionaries, and data serialization
 
 Now we'll run Python interactively and play more with lists and dictionaries within Python.
 
-* Open up lab2.2.py in Atom to observe the code
+* Open up lab2.1.py in Atom to observe the code
 * Issue the following commands in a terminal
 ```bash
   $ cd ~/automation-class/code/
-  $ python -i lab2.2.py
+  $ python -i lab2.1.py
 ```
 ```python
   >>> dns_servers
@@ -111,7 +111,7 @@ It is common to define data in YAML to be consumed programmatically by tools lik
 ```
 * Run the Python script to open the YAML file, convert it to JSON, and write out a new file
 ```
-  $ python lab2.3.py
+  $ python lab2.2.py
 ```
 * Notice ports.json now exists after running the Python script; we'll examine it in another lab
 
@@ -275,7 +275,7 @@ With this ad-hoc command, we're invoking Ansible against localhost, and using th
 
 * Issue the following command
 ```bash
-  $ ansible localhost -m apt -a "name=yamllint" --become -k -c local
+  $ ansible localhost -m apt -a "name=yamllint" --become -K -c local
 ```
 * Provide your SSH jumpbox (not Guacamole) password when prompted
 
@@ -347,7 +347,7 @@ While ad hoc commands can be useful, the real power of Ansible comes from using 
 
 ```bash
   $ sl
-  $ jq . ../ports.json
+  $ jq . ports.json
 ```
 
 * Ahh, much better
